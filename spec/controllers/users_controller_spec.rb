@@ -67,9 +67,33 @@ RSpec.describe UsersController, type: :controller do
     end
 
     context "with invalid parameters" do
-      it "doesn't create a record in the database"
-      it "render the new template"
-      it "sets a flash message"
+      def invalid_params
+        {
+          first_name:            Faker::Name.first_name,
+          last_name:             Faker::Name.last_name,
+          email:                 nil,
+          password:              "supersecret",
+          password_confirmation: "supersecret"
+        }
+      end
+
+      def invalid_request
+        post(:create, {user: invalid_params})
+      end
+
+      it "doesn't create a record in the database" do
+        expect { invalid_request }.not_to change { User.count }
+      end
+
+      it "render the new template" do
+        invalid_request
+        expect(response).to render_template(:new)
+      end
+
+      it "sets a flash message" do
+        invalid_request
+        expect(flash[:alert]).to be
+      end
     end
   end
 
