@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe CampaignsController, type: :controller do
-  let(:user) { create(:user) }
+  let(:user)     { create(:user)     }
+  let(:campaign) { create(:campaign) }
 
   describe "#new" do
     context "user not signed in" do
@@ -78,6 +79,36 @@ RSpec.describe CampaignsController, type: :controller do
           expect(response).to render_template(:new)
         end
       end
+    end
+  end
+
+  describe "#show" do
+    before { get :show, id: campaign.id }
+
+    it "instantiates a campaign variable with the Campaign whose id is passed" do
+      expect(assigns(:campaign)).to eq(campaign)
+    end
+
+    it "it renders the show template" do
+      expect(response).to render_template(:show)
+    end
+  end
+
+  describe "#index" do
+    let(:campaign_1) { create(:campaign) }
+
+    it "assigns an instance variable @campaigns to all created campaigns" do
+      # we're calling campaign and campaign_1 in order for them to be created
+      # in the database before we make the request
+      campaign
+      campaign_1
+      get :index
+      expect(assigns(:campaigns)).to eq([campaign, campaign_1])
+    end
+
+    it "renders the index template" do
+      get :index
+      expect(response).to render_template(:index)
     end
   end
 
