@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   resources :sessions, only: [:new, :create] do
     delete :destroy, on: :collection
   end
-  resources :campaigns, only: [:new]
+  resources :campaigns, only: [:new, :create, :show]
 
   root "users#new"
 
