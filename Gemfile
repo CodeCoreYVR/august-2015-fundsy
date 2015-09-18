@@ -39,6 +39,7 @@ group :development, :test do
   gem 'byebug'
 
   gem "cowsay"
+  gem "nyan-cat-formatter"
 
   gem 'rspec-rails'
   gem 'factory_girl_rails'
