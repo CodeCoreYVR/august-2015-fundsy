@@ -1,8 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe CampaignsController, type: :controller do
-  let(:user)     { create(:user)     }
-  let(:campaign) { create(:campaign) }
+  let(:user)     { create(:user)                 }
+  let(:user_1)   { create(:user)                 }
+  let(:campaign) { create(:campaign, user: user) }
 
   describe "#new" do
     context "user not signed in" do
@@ -112,4 +113,61 @@ RSpec.describe CampaignsController, type: :controller do
     end
   end
 
+  describe "#edit" do
+    context "with signed in user" do
+      context "with authorized user signed in" do
+        before { login user }
+        it "renders the edit template" do
+          get :edit, id: campaign.id
+          expect(response).to render_template :edit
+        end
+        it "instantiates an instance variable with the campaign whose is is passed" do
+          get :edit, id: campaign.id
+          expect(assigns(:campaign)).to eq(campaign)
+        end
+      end
+      context "with unauthorized user signed in" do
+        before { login user_1 }
+        it "redirects to root path" do
+          get :edit, id: campaign.id
+          expect(response).to redirect_to root_path
+        end
+        it "sets a flash message" do
+          get :edit, id: campaign.id
+          expect(flash[:alert]).to be
+        end
+      end
+    end
+    context "with no signed in user" do
+      it "redirects to new session path" do
+        get :edit, id: campaign.id
+        expect(response).to redirect_to new_session_path
+      end
+    end
+  end
+
+  describe "#update" do
+    context "with no signed in user" do
+      it "redirects to new session path"
+    end
+    context "with signed in user" do
+      context "user is unauthorized" do
+        it "redirects to the home page"
+      end
+      context "user is authorized" do
+        context "with valid attributes" do
+          it "updates the campaign record with new attributes"
+          it "redirect to campaign show page"
+        end
+        context "with invalid attributes" do
+          it "doesn't update the campaign with the new attributes"
+          it "renders the edit template"
+        end
+      end
+    end
+  end
+
+  describe "#destroy" do
+
+  end
 end

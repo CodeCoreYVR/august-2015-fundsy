@@ -1,5 +1,5 @@
 class CampaignsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create]
+  before_action :authenticate_user!, only: [:new, :create, :edit]
 
   def index
     @campaigns = Campaign.all
@@ -21,6 +21,13 @@ class CampaignsController < ApplicationController
 
   def show
     @campaign = Campaign.find params[:id]
+  end
+
+  def edit
+    @campaign = Campaign.find params[:id]
+    unless current_user == @campaign.user
+      redirect_to root_path, alert: "Access denied!"
+    end
   end
 
   private
