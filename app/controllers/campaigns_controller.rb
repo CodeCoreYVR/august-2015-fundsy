@@ -1,8 +1,9 @@
 class CampaignsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create, :edit]
+  before_action :authenticate_user!, except: [:show, :index]
+  before_action :find_campaign, only: [:show, :update, :destroy, :edit]
 
   def index
-    @campaigns = Campaign.all
+    @campaigns = Campaign.order(:created_at)
   end
 
   def new
@@ -20,12 +21,31 @@ class CampaignsController < ApplicationController
   end
 
   def show
-    @campaign = Campaign.find params[:id]
   end
 
   def edit
-    @campaign = Campaign.find params[:id]
     unless current_user == @campaign.user
+      redirect_to root_path, alert: "Access denied!"
+    end
+  end
+
+  def update
+    if current_user == @campaign.user
+      if @campaign.update(campaign_params)
+        redirect_to @campaign, notice: "Campaign Created!"
+      else
+        render :edit
+      end
+    else
+      redirect_to root_path, alert: "Access denied!"
+    end
+  end
+
+  def destroy
+    if current_user == @campaign.user
+      @campaign.destroy
+      redirect_to campaigns_path, notice: "Campaign deleted!"
+    else
       redirect_to root_path, alert: "Access denied!"
     end
   end
@@ -34,6 +54,10 @@ class CampaignsController < ApplicationController
 
   def campaign_params
     params.require(:campaign).permit(:title, :description, :goal, :end_date)
+  end
+
+  def find_campaign
+    @campaign = Campaign.find params[:id]
   end
 
 end

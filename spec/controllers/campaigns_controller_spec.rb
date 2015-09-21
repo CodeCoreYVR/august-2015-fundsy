@@ -148,26 +148,85 @@ RSpec.describe CampaignsController, type: :controller do
 
   describe "#update" do
     context "with no signed in user" do
-      it "redirects to new session path"
+      it "redirects to new session path" do
+        patch :update, id: campaign.id
+        expect(response).to(redirect_to(new_session_path))
+      end
     end
     context "with signed in user" do
       context "user is unauthorized" do
-        it "redirects to the home page"
+        before { login(user_1) }
+        it "redirects to the home page" do
+          patch :update, id: campaign.id
+          expect(response).to redirect_to root_path
+        end
       end
       context "user is authorized" do
+        before { login(user) }
+        def valid_attributes(new_attributes = {})
+          attributes_for(:campaign).merge(new_attributes)
+        end
         context "with valid attributes" do
-          it "updates the campaign record with new attributes"
-          it "redirect to campaign show page"
+          it "updates the campaign record with new attributes" do
+            new_goal = campaign.goal + 1
+            patch :update, id: campaign.id, campaign: valid_attributes(goal: new_goal)
+            campaign.reload
+            expect(campaign.goal).to eq(new_goal)
+          end
+          it "redirect to campaign show page" do
+            new_goal = campaign.goal + 1
+            patch :update, id: campaign.id, campaign: valid_attributes(goal: new_goal)
+            campaign.reload
+            expect(response).to redirect_to(campaign_path(campaign))
+          end
         end
         context "with invalid attributes" do
-          it "doesn't update the campaign with the new attributes"
-          it "renders the edit template"
+          def invalid_request
+            patch(:update, {id: campaign.id, campaign: valid_attributes({title: nil})})
+          end
+          it "doesn't update the campaign with the new attributes" do
+            expect { invalid_request }.not_to change { campaign.reload.title }
+          end
+
+          it "renders the edit template" do
+            invalid_request
+            expect(response).to render_template(:edit)
+          end
         end
       end
     end
   end
 
   describe "#destroy" do
+    context "with no signed in user" do
+      it "redirects to new session path" do
+        delete :destroy, id: campaign.id
+        expect(response).to redirect_to new_session_path
+      end
+    end
+    context "with signed in user" do
+      context "user is authorized" do
+        before { login(user) }
+        let!(:campaign) { create(:campaign, user: user) }
+        it "deletes a campaign from the database" do
+          before_count = Campaign.count
+          delete :destroy, id: campaign.id
+          after_count = Campaign.count
+          expect(before_count - after_count).to eq(1)
+        end
+        it "redirect to campaigns index page" do
+          delete :destroy, id: campaign.id
+          expect(response).to redirect_to campaigns_path
+        end
+      end
+      context "user is unauthorized" do
+        before { login(user_1) }
 
+        it "redirects to home page" do
+          delete :destroy, id: campaign.id
+          expect(response).to redirect_to root_path
+        end
+      end
+    end
   end
 end
