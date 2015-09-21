@@ -32,6 +32,8 @@ gem 'bcrypt', '~> 3.1.7'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+gem "simple_form"
+
 gem "faker"
 
 group :development, :test do
@@ -40,6 +42,9 @@ group :development, :test do
 
   gem "cowsay"
   gem "nyan-cat-formatter"
+
+  gem "capybara"
+  gem "launchy"
 
   gem 'rspec-rails'
   gem 'factory_girl_rails'

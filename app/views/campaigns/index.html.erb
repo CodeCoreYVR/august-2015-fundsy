@@ -1,0 +1,9 @@
+<h1>Welcome to Fund.sy</h1>
+<h2>All campaigns</h2>
+<% @campaigns.each do |campaign| %>
+  <h3><%= campaign.title.upcase %></h3>
+  <p>
+    <%= campaign.description.truncate(35) %>
+  </p>
+  <hr>
+<% end %>
