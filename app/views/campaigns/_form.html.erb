@@ -1,0 +1,25 @@
+<%= simple_form_for @campaign do |f| %>
+  <%= f.input :title %>
+  <%= f.input :description %>
+  <%= f.input :goal %>
+  <%= f.input :end_date %>
+  <!-- <% if @campaign.errors.messages[:rewards] %>
+    <div>
+      <%= @campaign.errors.messages[:rewards].join(", ") %>
+    </div>
+  <% end %> -->
+  <div class="row">
+    <h2>Rewards</h2>
+    <div class="links col-md-12">
+      <div class="clearfix"></div>
+      <%= link_to_add_association 'add reward', f, :rewards,
+            class: "btn btn-primary",
+             data: {"association-insertion-method" => :after} %>
+    </div>
+    <%= f.error :rewards %>
+    <%= f.simple_fields_for :rewards do |r| %>
+      <%= render "reward_fields", f: r %>
+    <% end %>
+  </div>
+  <%= f.button :submit %>
+<% end %>

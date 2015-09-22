@@ -39,6 +39,8 @@ gem "faker"
 gem "bootstrap-sass"
 gem "quiet_assets"
 
+gem "cocoon"
+
 gem 'simplecov', require: false, group: :test
 
 group :development, :test do

@@ -1,0 +1,16 @@
+<h1><%= @campaign.title %></h1>
+<p>
+  <%= @campaign.description %>
+</p>
+<p>Goal: <%= number_to_currency(@campaign.goal) %></p>
+<p>End Date: <%= @campaign.end_date.strftime("%Y-%b-%d %H:%M") %></p>
+<hr>
+<% @campaign.rewards.each do |reward| %>
+  <div class="col-md-3 well">
+    <p><%= number_to_currency(reward.amount) %></p>
+    <p><%= reward.description %></p>
+  </div>
+<% end %>
+<%= link_to "Edit", edit_campaign_path(@campaign), class: "btn btn-info" %>
+<%= link_to "Delete", @campaign, class: "btn btn-danger",
+            data: {confirm: "Are you sure?"}, method: :delete %>

@@ -8,7 +8,8 @@ class Campaign < ActiveRecord::Base
   # reject_if: :all_blank option will make it so if you pass it a set of blank
   # attributes, it will just ignore that set instead of attempting to create it
   # so it won't fail validations with the reward model
-  accepts_nested_attributes_for :rewards, reject_if: :all_blank
+  accepts_nested_attributes_for :rewards, reject_if: :all_blank,
+                                allow_destroy: true
 
   validates :title, presence: true, uniqueness: true
   validates :goal, presence: true, numericality: {greater_than: 10}

@@ -1,0 +1,20 @@
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <%= link_to "Fund.sy", root_path, class: "navbar-brand animated tada" %>
+      <ul class="nav navbar-nav">
+        <li><%= link_to "All Campaigns", campaigns_path %></li>
+        <li><%= link_to "New Campaign", new_campaign_path %></li>
+      </ul>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+      <% if user_signed_in? %>
+        <li>Hello <%= current_user.first_name %></li>
+        <li><%= link_to "Sign out", sessions_path, method: :delete %></li>
+      <% else %>
+        <li><%= link_to "Sign in", new_session_path %></li>
+        <li><%= link_to "Sign up", new_user_path %></li>
+      <% end %>
+    </ul>
+  </div>
+</nav>
