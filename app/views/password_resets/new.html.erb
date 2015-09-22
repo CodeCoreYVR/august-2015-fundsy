@@ -1,0 +1,8 @@
+<%= form_tag password_resets_path do %>
+  <div>
+    <%= label_tag :email %>
+    <%= text_field_tag :email %>
+  </div>
+  <%= submit_tag "Send Password Reset Instructions",
+                  class: "btn btn-primary" %>
+<% end %>

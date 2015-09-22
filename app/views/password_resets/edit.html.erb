@@ -1,0 +1,5 @@
+<%= simple_form_for @user, url: password_reset_path(@user.password_reset_token) do |f| %>
+  <%= f.input :password %>
+  <%= f.input :password_confirmation %>
+  <%= f.button :submit %>
+<% end %>
