@@ -36,11 +36,18 @@ gem "simple_form"
 
 gem "faker"
 
+gem "bootstrap-sass"
+gem "quiet_assets"
+
 gem 'simplecov', require: false, group: :test
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
+
+  gem "hirb"
+  gem "interactive_editor"
+  gem "awesome_print"
 
   gem "cowsay"
   gem "nyan-cat-formatter"

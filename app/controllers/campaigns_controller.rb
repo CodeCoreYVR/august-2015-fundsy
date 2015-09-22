@@ -8,6 +8,7 @@ class CampaignsController < ApplicationController
 
   def new
     @campaign = Campaign.new
+    2.times { @campaign.rewards.build }
   end
 
   def create
@@ -16,6 +17,12 @@ class CampaignsController < ApplicationController
     if @campaign.save
       redirect_to campaign_path(@campaign), notice: "Campaign created!"
     else
+      # When attempting to save, Rails will automatially build a number of
+      # rewards that haven't been rejected (for example, they're all blank)
+      # we need to build the difference between what got automatially built
+      # and our desired number which is 2 in this case
+      number_to_build = 2 - @campaign.rewards.size
+      number_to_build.times { @campaign.rewards.build }
       render :new
     end
   end
@@ -53,7 +60,8 @@ class CampaignsController < ApplicationController
   private
 
   def campaign_params
-    params.require(:campaign).permit(:title, :description, :goal, :end_date)
+    params.require(:campaign).permit(:title, :description, :goal, :end_date,
+                                     rewards_attributes: [:amount, :description])
   end
 
   def find_campaign
