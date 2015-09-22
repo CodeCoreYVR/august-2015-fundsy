@@ -10,7 +10,6 @@
   <% if user_signed_in? %>
     <%= current_user.full_name %>
   <% end %>
-
   <% if flash[:notice] %>
     <div class="alert alert-success"><%= flash[:notice] %></div>
   <% elsif flash[:alert] %>
