@@ -4,6 +4,11 @@
 </p>
 <p>Goal: <%= number_to_currency(@campaign.goal) %></p>
 <p>End Date: <%= @campaign.end_date.strftime("%Y-%b-%d %H:%M") %></p>
+<p>
+  <span class="label <%= state_class(@campaign.aasm_state) %>">
+    <%= @campaign.aasm_state %>
+  </span>
+</p>
 <hr>
 <% @campaign.rewards.each do |reward| %>
   <div class="col-md-3 well">
@@ -14,6 +19,11 @@
 <% if @campaign.may_publish? %>
   <%= link_to "Publish", campaign_publishings_path(@campaign), method: :post,
                           class: "btn btn-primary" %>
+<% end %>
+<% if @campaign.may_cancel? %>
+  <%= link_to "Cancel", campaign_cancellings_path(@campaign), method: :post,
+                          class: "btn btn-danger",
+                          data: {confirm: "Are you sure?"} %>
 <% end %>
 <%= link_to "Edit", edit_campaign_path(@campaign), class: "btn btn-info" %>
 <%= link_to "Delete", @campaign, class: "btn btn-danger",
