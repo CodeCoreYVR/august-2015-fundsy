@@ -1,0 +1,31 @@
+h1= @campaign.title
+p= @campaign.description
+p 
+  | Goal:
+  = number_to_currency(@campaign.goal)
+p
+  | End Date:
+  = @campaign.end_date.strftime("%Y-%b-%d %H:%M")
+p
+  span class="label <%= state_class(@campaign.aasm_state) %>"
+    = @campaign.aasm_state
+hr
+- @campaign.rewards.each do |reward|
+  .col-md-3.well
+    p= number_to_currency(reward.amount)
+    p= reward.description
+- if @campaign.may_publish?
+  = link_to "Publish", campaign_publishings_path(@campaign), method: :post, class: "btn btn-primary"
+- if @campaign.may_cancel?
+  = link_to "Cancel", campaign_cancellings_path(@campaign), method: :post,
+                          class: "btn btn-danger",
+                          data: {confirm: "Are you sure?"}
+= link_to "Edit", edit_campaign_path(@campaign), class: "btn btn-info"
+= link_to "Delete", @campaign, class: "btn btn-danger", data: {confirm: "Are you sure?"}, method: :delete
+.clearfix
+h2 Comments
+= simple_form_for [@campaign, @comment] do |f|
+  = f.input :body
+  = f.submit class: "btn btn-primary"
+- @campaign.comments.each do |comment|
+  .well= comment.body
