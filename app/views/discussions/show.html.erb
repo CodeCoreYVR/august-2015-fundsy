@@ -1,0 +1,21 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Body:</strong>
+  <%= @discussion.body %>
+</p>
+
+<%= link_to 'Edit', edit_discussion_path(@discussion) %> |
+<%= link_to 'Back', discussions_path %>
+
+<h2>Comments</h2>
+<%= simple_form_for [@discussion, @comment] do |f| %>
+  <%= f.input :body %>
+  <%= f.submit %>
+<% end %>
+
+<% @discussion.comments.each do |comment| %>
+  <div class="well">
+    <%= comment.body %>
+  </div>
+<% end %>

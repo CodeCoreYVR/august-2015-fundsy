@@ -28,3 +28,15 @@
 <%= link_to "Edit", edit_campaign_path(@campaign), class: "btn btn-info" %>
 <%= link_to "Delete", @campaign, class: "btn btn-danger",
             data: {confirm: "Are you sure?"}, method: :delete %>
+<div class="clearfix"></div>
+<h2>Comments</h2>
+<%= simple_form_for [@campaign, @comment] do |f| %>
+  <%= f.input :body %>
+  <%= f.submit class: "btn btn-primary" %>
+<% end %>
+
+<% @campaign.comments.each do |comment| %>
+  <div class="well">
+    <%= comment.body %>
+  </div>
+<% end %>

@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :discussions do
+    resources :comments, only: [:create]
+  end
   resources :users, only: [:new, :create]
   resources :password_resets, only: [:new, :create, :edit, :update]
 
@@ -8,6 +11,7 @@ Rails.application.routes.draw do
   resources :campaigns do
     resources :publishings, only: [:create]
     resources :cancellings, only: [:create]
+    resources :comments,    only: [:create]
   end
 
   root "campaigns#index"

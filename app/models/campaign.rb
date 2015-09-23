@@ -11,6 +11,8 @@ class Campaign < ActiveRecord::Base
   accepts_nested_attributes_for :rewards, reject_if: :all_blank,
                                 allow_destroy: true
 
+  has_many :comments, as: :commentable, dependent: :destroy
+
   validates :title, presence: true, uniqueness: true
   validates :goal, presence: true, numericality: {greater_than: 10}
   validates :description, presence: true
