@@ -51,6 +51,9 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
 
+  gem "pry-rails"
+  gem "pry-byebug", git: "https://github.com/deivid-rodriguez/pry-byebug"
+
   gem "hirb"
   gem "interactive_editor"
   gem "awesome_print"

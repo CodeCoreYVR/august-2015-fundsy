@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
   validates :password_reset_token, uniqueness: true, allow_blank: true
 
   def full_name
-    "#{first_name} #{last_name}".strip
+    "#{first_name} #{last_name}".squeeze(" ").strip
   end
 
   def password_reset_expired?
