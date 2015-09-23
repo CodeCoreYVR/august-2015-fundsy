@@ -5,7 +5,7 @@ class CampaignsController < ApplicationController
   DEFAULT_REWARD_FIELDS_COUNT = 2
 
   def index
-    @campaigns = Campaign.order(:created_at)
+    @campaigns = Campaign.published.order(:created_at)
   end
 
   def new
