@@ -5,7 +5,9 @@ Rails.application.routes.draw do
   resources :sessions, only: [:new, :create] do
     delete :destroy, on: :collection
   end
-  resources :campaigns
+  resources :campaigns do
+    resources :publishings, only: [:create]
+  end
 
   root "campaigns#index"
 

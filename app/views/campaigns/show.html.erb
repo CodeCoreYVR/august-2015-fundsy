@@ -11,6 +11,10 @@
     <p><%= reward.description %></p>
   </div>
 <% end %>
+<% if @campaign.may_publish? %>
+  <%= link_to "Publish", campaign_publishings_path(@campaign), method: :post,
+                          class: "btn btn-primary" %>
+<% end %>
 <%= link_to "Edit", edit_campaign_path(@campaign), class: "btn btn-info" %>
 <%= link_to "Delete", @campaign, class: "btn btn-danger",
             data: {confirm: "Are you sure?"}, method: :delete %>
