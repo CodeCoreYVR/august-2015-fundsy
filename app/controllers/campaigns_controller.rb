@@ -6,6 +6,10 @@ class CampaignsController < ApplicationController
 
   def index
     @campaigns = Campaign.published.order(:created_at)
+    respond_to do |format|
+      format.json { render json: @campaigns }
+      format.html { render }
+    end
   end
 
   def new
