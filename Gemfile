@@ -18,6 +18,8 @@ gem "letter_opener", group: :development
 
 gem "aasm"
 
+gem 'rack-cors', :require => 'rack/cors'
+
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
@@ -56,6 +58,8 @@ group :development, :test do
 
   gem "pry-rails"
   gem "pry-byebug", git: "https://github.com/deivid-rodriguez/pry-byebug"
+
+  gem "catpants"
 
   gem "hirb"
   gem "interactive_editor"
