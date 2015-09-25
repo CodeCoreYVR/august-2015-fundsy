@@ -35,6 +35,12 @@ class CampaignsController < ApplicationController
 
   def show
     @comment = Comment.new
+    respond_to do |format|
+      format.html { render }
+      format.json { render json: {campaign: @campaign,
+                                  rewards:  @campaign.rewards,
+                                  comments: @campaign.comments} }
+    end
   end
 
   def edit
