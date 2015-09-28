@@ -5,7 +5,8 @@ class CampaignsController < ApplicationController
   DEFAULT_REWARD_FIELDS_COUNT = 2
 
   def index
-    @campaigns = Campaign.published.order(:created_at)
+    @campaigns = Campaign.includes(:user, :comments).published.
+                  order(:created_at).references(:user, :comments)
     respond_to do |format|
       format.json { render json: @campaigns }
       format.html { render }

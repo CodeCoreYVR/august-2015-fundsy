@@ -1,9 +1,17 @@
 <h1>Welcome to Fund.sy</h1>
 <h2>All campaigns</h2>
 <% @campaigns.each do |campaign| %>
-  <h3><%= link_to campaign.title.upcase, campaign %></h3>
-  <p>
-    <%= campaign.description.truncate(35) %>
-  </p>
-  <hr>
+  <%= cache campaign do %>
+    <h3><%= link_to campaign.title.upcase, campaign %></h3>
+    <p>
+      <%= campaign.description.truncate(35) %>
+    </p>
+    <p>
+    <% if campaign.user %>
+      by <%= campaign.user.full_name %>
+    <% end %>
+    <%= campaign.comments.count %>
+    </p>
+    <hr>
+  <% end %>
 <% end %>
