@@ -13,12 +13,14 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
+gem 'underscore-rails'
+
+gem 'geocoder'
+gem 'gmaps4rails'
 
 gem "letter_opener", group: :development
 
 gem "aasm"
-
-gem 'rack-cors', :require => 'rack/cors'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'

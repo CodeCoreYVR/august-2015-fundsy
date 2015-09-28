@@ -1,14 +1,22 @@
 <h1><%= @campaign.title %></h1>
-<p>
-  <%= @campaign.description %>
-</p>
-<p>Goal: <%= number_to_currency(@campaign.goal) %></p>
-<p>End Date: <%= @campaign.end_date.strftime("%Y-%b-%d %H:%M") %></p>
-<p>
-  <span class="label <%= state_class(@campaign.aasm_state) %>">
-    <%= @campaign.aasm_state %>
-  </span>
-</p>
+<div class="col-md-8">
+  <p>
+    <%= @campaign.description %>
+  </p>
+  <p>Goal: <%= number_to_currency(@campaign.goal) %></p>
+  <p>End Date: <%= @campaign.end_date.strftime("%Y-%b-%d %H:%M") %></p>
+  <p>
+    <span class="label <%= state_class(@campaign.aasm_state) %>">
+      <%= @campaign.aasm_state %>
+    </span>
+  </p>
+</div>
+<div class="col-md-4">
+  <div>
+    <div id="map" style='height: 400px;'></div>
+  </div>
+</div>
+
 <hr>
 <% @campaign.rewards.each do |reward| %>
   <div class="col-md-3 well">
@@ -40,3 +48,19 @@
     <%= comment.body %>
   </div>
 <% end %>
+
+
+<script type="text/javascript">
+  handler = Gmaps.build('Google');
+  handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+    markers = handler.addMarkers([
+      {
+        "lat": <%= @campaign.latitude %>,
+        "lng": <%= @campaign.longitude %>,
+        "infowindow": "<%= @campaign.title %>"
+      }
+    ]);
+    handler.bounds.extendWith(markers);
+    handler.fitMapToBounds();
+  });
+</script>

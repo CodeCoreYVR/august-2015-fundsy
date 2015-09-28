@@ -13,6 +13,15 @@ class Campaign < ActiveRecord::Base
 
   has_many :comments, as: :commentable, dependent: :destroy
 
+  # address is a field in our database in this case. We expect the user to
+  # provide the full address location of the campaign
+  geocoded_by :address               # can also be an IP address
+  # Ideally you will make the geocoding happen in the background
+  # because it connects to a third party service. So you shouldn't have the
+  # web request waitng for that.
+  after_validation :geocode
+
+
   validates :title, presence: true, uniqueness: true
   validates :goal, presence: true, numericality: {greater_than: 10}
   validates :description, presence: true
