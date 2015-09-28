@@ -9,6 +9,9 @@ class User < ActiveRecord::Base
   validates :first_name, presence: true
   validates :password_reset_token, uniqueness: true, allow_blank: true
 
+  geocoded_by :address
+  after_validation :geocode
+
   def full_name
     "#{first_name} #{last_name}".squeeze(" ").strip
   end

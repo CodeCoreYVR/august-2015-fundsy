@@ -14,6 +14,7 @@ FactoryGirl.define do
     sequence(:description)  { Faker::Lorem.paragraph          }
     sequence(:goal)         { 10 + rand(100000000)            }
     sequence(:end_date)     { Time.now + 30.days              }
+    address                 ""
     aasm_state              :published
   end
 end
