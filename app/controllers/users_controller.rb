@@ -4,11 +4,12 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new user_params
-    if @user.save
-      session[:user_id] = @user.id
+    service = Users::CreateUser.new(params: user_params)
+    if service.call
+      sign_in(service.user)
       redirect_to root_path, notice: "Account created!"
     else
+      @user = service.user
       flash[:alert] = "Did not create"
       render :new
     end
