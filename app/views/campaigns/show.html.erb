@@ -1,15 +1,9 @@
 <h1><%= @campaign.title %></h1>
 <div class="col-md-8">
-  <p>
-    <%= @campaign.description %>
-  </p>
-  <p>Goal: <%= number_to_currency(@campaign.goal) %></p>
-  <p>End Date: <%= @campaign.end_date.strftime("%Y-%b-%d %H:%M") %></p>
-  <p>
-    <span class="label <%= state_class(@campaign.aasm_state) %>">
-      <%= @campaign.aasm_state %>
-    </span>
-  </p>
+  <p><%= @campaign.description %></p>
+  <p>Goal: <%= @campaign.goal %></p>
+  <p>End Date: <%= @campaign.end_date %></p>
+  <p><%= @campaign.state_label %></p>
 </div>
 <div class="col-md-4">
   <div>
@@ -18,24 +12,19 @@
 </div>
 
 <hr>
+
 <% @campaign.rewards.each do |reward| %>
   <div class="col-md-3 well">
     <p><%= number_to_currency(reward.amount) %></p>
     <p><%= reward.description %></p>
   </div>
 <% end %>
-<% if @campaign.may_publish? %>
-  <%= link_to "Publish", campaign_publishings_path(@campaign), method: :post,
-                          class: "btn btn-primary" %>
-<% end %>
-<% if @campaign.may_cancel? %>
-  <%= link_to "Cancel", campaign_cancellings_path(@campaign), method: :post,
-                          class: "btn btn-danger",
-                          data: {confirm: "Are you sure?"} %>
-<% end %>
-<%= link_to "Edit", edit_campaign_path(@campaign), class: "btn btn-info" %>
-<%= link_to "Delete", @campaign, class: "btn btn-danger",
-            data: {confirm: "Are you sure?"}, method: :delete %>
+
+<%= @campaign.publish_button %>
+<%= @campaign.cancel_button %>
+<%= @campaign.edit_button %>
+<%= @campaign.delete_button %>
+
 <div class="clearfix"></div>
 <h2>Comments</h2>
 <%= simple_form_for [@campaign, @comment] do |f| %>

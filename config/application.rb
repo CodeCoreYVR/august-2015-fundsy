@@ -18,6 +18,8 @@ Bundler.require(*Rails.groups)
 module Fundsy
   class Application < Rails::Application
 
+    config.autoload_paths << Rails.root.join('app', 'decorators')
+
     config.middleware.insert_before 0, "Rack::Cors" do
      allow do
        origins '*'

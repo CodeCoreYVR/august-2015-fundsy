@@ -6,7 +6,7 @@ class CampaignsController < ApplicationController
 
   def index
     @campaigns = Campaign.includes(:user, :comments).published.
-                  order(:created_at).references(:user, :comments)
+                  order(:created_at).references(:user, :comments).decorate
     respond_to do |format|
       format.json { render json: @campaigns }
       format.html { render }
@@ -35,6 +35,7 @@ class CampaignsController < ApplicationController
   end
 
   def show
+    @campaign = @campaign.decorate
     @comment = Comment.new
     respond_to do |format|
       format.html { render }

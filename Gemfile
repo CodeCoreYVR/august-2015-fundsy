@@ -15,6 +15,8 @@ gem 'coffee-rails', '~> 4.1.0'
 # gem 'therubyracer', platforms: :ruby
 gem 'underscore-rails'
 
+gem 'draper'
+
 gem 'geocoder'
 gem 'gmaps4rails'
 

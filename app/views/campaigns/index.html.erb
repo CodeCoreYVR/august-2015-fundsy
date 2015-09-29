@@ -4,7 +4,7 @@
   <%= cache campaign do %>
     <h3><%= link_to campaign.title.upcase, campaign %></h3>
     <p>
-      <%= campaign.description.truncate(35) %>
+      <%= campaign.truncated_description %>
     </p>
     <p>
     <% if campaign.user %>
