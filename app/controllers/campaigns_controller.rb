@@ -19,11 +19,12 @@ class CampaignsController < ApplicationController
   end
 
   def create
-    @campaign = Campaign.new campaign_params
-    @campaign.user = current_user
-    if @campaign.save
-      redirect_to campaign_path(@campaign), notice: "Campaign created!"
+    service = Campaigns::CreateCampaign.new(user:   current_user,
+                                            params: campaign_params)
+    if service.call
+      redirect_to campaign_path(service.campaign), notice: "Campaign created!"
     else
+      @campaign = service.campaign
       # When attempting to save, Rails will automatially build a number of
       # rewards that haven't been rejected (for example, they're all blank)
       # we need to build the difference between what got automatially built

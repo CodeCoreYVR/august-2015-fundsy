@@ -17,6 +17,8 @@ gem 'underscore-rails'
 
 gem 'draper'
 
+gem "virtus"
+
 gem 'geocoder'
 gem 'gmaps4rails'
 

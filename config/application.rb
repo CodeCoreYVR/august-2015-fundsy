@@ -19,6 +19,7 @@ module Fundsy
   class Application < Rails::Application
 
     config.autoload_paths << Rails.root.join('app', 'decorators')
+    config.autoload_paths << Rails.root.join('app', 'services')
 
     config.middleware.insert_before 0, "Rack::Cors" do
      allow do
