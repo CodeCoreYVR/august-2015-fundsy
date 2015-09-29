@@ -9,6 +9,8 @@ class User < ActiveRecord::Base
   validates :first_name, presence: true
   validates :password_reset_token, uniqueness: true, allow_blank: true
 
+  before_create :generate_api_key
+
   geocoded_by :address
   after_validation :geocode
 
@@ -33,5 +35,14 @@ class User < ActiveRecord::Base
     self.password_reset_expiry_date = Time.now + 3.days
     save
   end
+
+  private
+
+  def generate_api_key
+    begin
+      self.api_key = SecureRandom.urlsafe_base64(32)
+    end while User.exists?(api_key: self.api_key)
+  end
+
 
 end
