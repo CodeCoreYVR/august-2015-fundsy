@@ -1,6 +1,12 @@
 Rails.application.routes.draw do
   resources :nearby_campaigns, only: :index
 
+  # this is a special route we need to set in order for Omniauth to
+  # redirect us to the Twitter website
+  get "/auth/twitter", as: :sign_in_with_twitter
+
+  get "/auth/:provider/callback" => "callbacks#index"
+
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   resources :discussions do
