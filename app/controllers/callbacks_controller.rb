@@ -6,7 +6,6 @@ class CallbacksController < ApplicationController
     unless user
       user = User.create_from_omniauth(omniauth_data)
     end
-    binding.pry
     sign_in(user)
     redirect_to root_path, notice: "Thank you signing in!"
   end
