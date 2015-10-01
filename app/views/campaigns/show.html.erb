@@ -10,7 +10,6 @@
     <div id="map" style='height: 400px;'></div>
   </div>
 </div>
-
 <hr>
 
 <% @campaign.rewards.each do |reward| %>
@@ -24,6 +23,11 @@
 <%= @campaign.cancel_button %>
 <%= @campaign.edit_button %>
 <%= @campaign.delete_button %>
+
+<%= simple_form_for [@campaign, @pledge] do |f| %>
+  <%= f.input :amount %>
+  <%= f.submit class: "btn btn-primary" %>
+<% end %>
 
 <div class="clearfix"></div>
 <h2>Comments</h2>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150930172909) do
+ActiveRecord::Schema.define(version: 20151001165008) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -81,6 +81,19 @@ ActiveRecord::Schema.define(version: 20150930172909) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "pledges", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "campaign_id"
+    t.integer  "amount"
+    t.string   "stripe_txn_id"
+    t.string   "aasm_state"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "pledges", ["campaign_id"], name: "index_pledges_on_campaign_id", using: :btree
+  add_index "pledges", ["user_id"], name: "index_pledges_on_user_id", using: :btree
+
   create_table "rewards", force: :cascade do |t|
     t.text     "description"
     t.integer  "amount"
@@ -109,11 +122,16 @@ ActiveRecord::Schema.define(version: 20150930172909) do
     t.string   "twitter_consumer_token"
     t.string   "twitter_consumer_secret"
     t.text     "twitter_raw_data"
+    t.string   "stripe_customer_id"
+    t.string   "stripe_card_last4"
+    t.string   "stripe_card_type"
   end
 
   add_index "users", ["api_key"], name: "index_users_on_api_key", using: :btree
   add_index "users", ["password_reset_token"], name: "index_users_on_password_reset_token", using: :btree
 
   add_foreign_key "campaigns", "users"
+  add_foreign_key "pledges", "campaigns"
+  add_foreign_key "pledges", "users"
   add_foreign_key "rewards", "campaigns"
 end

@@ -37,7 +37,8 @@ class CampaignsController < ApplicationController
 
   def show
     @campaign = @campaign.decorate
-    @comment = Comment.new
+    @comment  = Comment.new
+    @pledge   = Pledge.new
     respond_to do |format|
       format.html { render }
       format.json { render json: {campaign: @campaign,

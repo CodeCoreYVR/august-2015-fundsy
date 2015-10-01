@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   resources :nearby_campaigns, only: :index
 
   # this is a special route we need to set in order for Omniauth to
@@ -22,6 +23,11 @@ Rails.application.routes.draw do
     resources :publishings, only: [:create]
     resources :cancellings, only: [:create]
     resources :comments,    only: [:create]
+    resources :pledges,     only: [:create]
+  end
+
+  resources :pledges, only: [] do
+    resources :payments, only: [:new, :create]
   end
 
   namespace :api, defaults: {format: :json} do

@@ -1,0 +1,21 @@
+<h1>Pay For your Pledge</h1>
+
+<%= form_tag "", id: "stripe-token-form" do %>
+  <div class="form-group">
+    <label for="card-number">Card Number</label>
+    <input id="card-number" class="form-control">
+  </div>
+  <div class="form-group">
+    <label>Expiry</label>
+    <%= select_month(Date.today, add_month_numbers: true) %>
+    <%= select_year(Date.today, start_year: Date.today.year,
+                                end_year: Date.today.year + 10) %>
+  </div>
+  <div class="form-group">
+    <label for="cvc">CVC</label>
+    <input id="cvc" class="form-control">
+  </div>
+  <div class="form-group">
+    <%= submit_tag "Submit", class: "btn btn-primary" %>
+  </div>
+<% end %>
