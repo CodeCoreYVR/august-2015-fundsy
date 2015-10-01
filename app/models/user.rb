@@ -21,6 +21,10 @@ class User < ActiveRecord::Base
     uid.present? && provider.present?
   end
 
+  def can_tweet?
+    twitter_consumer_token.present? && twitter_consumer_secret.present?
+  end
+
   def full_name
     "#{first_name} #{last_name}".squeeze(" ").strip
   end
