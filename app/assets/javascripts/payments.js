@@ -14,8 +14,15 @@ $(document).ready(function(){
   });
 
   stripeResponseHandler = function(status, response) {
-    console.log(status);
-    console.log(response);
+    if(status === 200) {
+      // case of success getting the token
+      $("#stripe_token").val(response.id);
+      $("#submission-form").submit();
+    } else {
+      // Case of error
+      var errorMessage = response.error.message;
+      $("#stripe-error-message").addClass("alert alert-danger").html(errorMessage);
+    }
   };
 
 });

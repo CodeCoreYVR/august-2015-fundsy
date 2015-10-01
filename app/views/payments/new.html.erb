@@ -1,5 +1,10 @@
 <h1>Pay For your Pledge</h1>
 
+<%= form_tag pledge_payments_path(@pledge), id: "submission-form" do %>
+  <%= hidden_field_tag :stripe_token %>
+<% end %>
+
+<div id="stripe-error-message"></div>
 <%= form_tag "", id: "stripe-token-form" do %>
   <div class="form-group">
     <label for="card-number">Card Number</label>
